@@ -1,0 +1,2274 @@
+openapi: 3.0.1
+info:
+  title: Stardust API
+  version: 2023-02-22T22:32:07Z
+servers:
+- url: https://core-api.stardust.gg/v1
+paths:
+  /game/get:
+    get:
+      tags:
+      - Game Endpoints
+      summary: Get Game
+      description: Get the Details of Your Game
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDGameGetResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /game/mutate:
+    put:
+      tags:
+      - Game Endpoints
+      summary: Mutate Game
+      description: Change a games data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDGameMutateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDGameMutateRequest
+  /health:
+    get:
+      tags:
+      - Health Endpoints
+      summary: Get Health
+      description: Get system health info
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDHealthResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /player/count:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get Player Count
+      description: Get Player count within a game
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerCountResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/create:
+    post:
+      tags:
+      - Player Endpoints
+      summary: Create Player
+      description: Create a Player for a game. Returns their player id which can be
+        used to reference them later in Stardust's system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDPlayerCreateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerCreateResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDPlayerCreateRequest
+  /player/get:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get Player
+      description: Get Details of a Player Within a Game
+      parameters:
+      - name: playerId
+        in: query
+        description: Player id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerGetResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/get-all:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get All Players
+      description: Get the List of All Players in Game
+      parameters:
+      - name: start
+        in: query
+        description: position in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Find a substring within the Player unique ID field
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: maximum items returned in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerGetAllResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/get-id:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get Player ID
+      description: Get a Player's ID via their Unique ID
+      parameters:
+      - name: uniqueId
+        in: query
+        description: Player's Unique ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerGetIdResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/get-ids:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get All Player IDs
+      description: Get All Player IDs for a Given Game
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerGetIdsResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/get-inventory:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get Player Inventory
+      description: Get a players inventory and all the items it holds
+      parameters:
+      - name: start
+        in: query
+        description: position in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: tokenIds
+        in: query
+        description: "Comma-Separated String of token ids (ex. '3589, 3580')"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: playerId
+        in: query
+        description: Player id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: maximum items returned in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerGetInventoryResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/mutate:
+    put:
+      tags:
+      - Player Endpoints
+      summary: Mutate Player
+      description: Change player data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDPlayerMutateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDPlayerMutateRequest
+  /player/remove:
+    delete:
+      tags:
+      - Player Endpoints
+      summary: Remove Player
+      description: Removes (hides) a player from your game. This is not permanent.
+      parameters:
+      - name: playerId
+        in: query
+        description: "Player Id returned from player/create a UUID, i.e. 802760b0-2bb5-4fba-9237-895ed02cf8d8"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/wallet-get:
+    get:
+      tags:
+      - Player Endpoints
+      summary: Get Player Wallet
+      description: Get player's wallet within a game
+      parameters:
+      - name: playerId
+        in: query
+        description: Player id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDPlayerWalletGetResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /player/withdraw:
+    post:
+      tags:
+      - Player Endpoints
+      summary: Withdraw From Player
+      description: Withdraw a Player's Tokens from their Stardust Wallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDPlayerWithdrawRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDPlayerWithdrawRequest
+  /template/count:
+    get:
+      tags:
+      - Template Endpoints
+      summary: Get Template Count
+      description: Get a Template's Count Within a Game
+      parameters:
+      - name: filter
+        in: query
+        description: Find a substring within the Template name field
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTemplateCountResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /template/create:
+    post:
+      tags:
+      - Template Endpoints
+      summary: Create Template
+      description: Adds a New Token Template that lets Players Acquire that Token
+        using the Token/Mint Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTemplateCreateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTemplateCreateResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTemplateCreateRequest
+  /template/get:
+    get:
+      tags:
+      - Template Endpoints
+      summary: Get Template
+      description: Get the Details of a Template
+      parameters:
+      - name: templateId
+        in: query
+        description: Template Id such as 3589)
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTemplateGetResponse'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /template/get-all:
+    get:
+      tags:
+      - Template Endpoints
+      summary: Get All Templates
+      description: Get All of the Templates Within a Game
+      parameters:
+      - name: start
+        in: query
+        description: position in list
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Find a substring within the Template name field
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: maximum templates returned in list
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTemplateGetAllResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /template/get-tokens:
+    get:
+      tags:
+      - Template Endpoints
+      summary: Get Template Tokens
+      description: Get a List of All Minted Tokens from a Given Template
+      parameters:
+      - name: start
+        in: query
+        description: position in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: templateId
+        in: query
+        description: The ID of the Template
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: maximum templates returned in list
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: includeDeleted
+        in: query
+        description: If true tokens from deleted players are included in the response
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTemplateGetTokensResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /template/mutate:
+    put:
+      tags:
+      - Template Endpoints
+      summary: Mutate Template
+      description: "Mutates a Property of a Template, Which in Turn will Affect the\
+        \ Inherited Property on All of the Tokens Created from this Template (via\
+        \ token/mint)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTemplateMutateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTemplateMutateRequest
+  /template/props-remove:
+    delete:
+      tags:
+      - Template Endpoints
+      summary: Remove Template Property
+      description: Removes a Templates Property from Your Game
+      parameters:
+      - name: templateId
+        in: query
+        description: Template Id returned from template/create (ex. 5)
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: props
+        in: query
+        description: "Stringify Array of template mutable property names ex: '[\"\
+          exp\", \"health\"]' }"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /template/remove:
+    delete:
+      tags:
+      - Template Endpoints
+      summary: Remove Template
+      description: "Removes a Template from Your Game. If Players have Instances of\
+        \ this Template from the token/mint Command, Their Tokens will NOT be Removed"
+      parameters:
+      - name: templateId
+        in: query
+        description: Template Id returned from template/create (ex. 5)
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /token/burn:
+    post:
+      tags:
+      - Token Endpoints
+      summary: Burn Token
+      description: Burns token on-chain. Cannot be reversed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTokenBurnRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTokenBurnRequest
+  /token/get:
+    get:
+      tags:
+      - Token Endpoints
+      summary: Get Token
+      description: Some of the details of this token are based upon the Template that
+        it was created from (using token/mint)
+      parameters:
+      - name: tokenIds
+        in: query
+        description: "Stringify Array of token ids (ex. '[3589, 3580]')"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTokenGetResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /token/mint-bulk:
+    post:
+      tags:
+      - Token Endpoints
+      summary: Mint Tokens
+      description: Mint tokens to a player.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTokenMintBulkRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SDTokenMintBulkResponses'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTokenMintBulkRequest
+  /token/mutate:
+    put:
+      tags:
+      - Token Endpoints
+      summary: Mutate Token
+      description: Mutates a Property of a Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTokenMutateRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTokenMutateRequest
+  /token/props-remove:
+    delete:
+      tags:
+      - Token Endpoints
+      summary: Remove Token Property
+      description: Removes a Tokens Property from Your Game
+      parameters:
+      - name: tokenId
+        in: query
+        description: Token Id returned from token/create (ex. 5)
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: props
+        in: query
+        description: "Stringify Array of token mutable property names ex: '[\"exp\"\
+          , \"health\"]' }"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+  /token/transfer:
+    post:
+      tags:
+      - Token Endpoints
+      summary: Transfer Tokens
+      description: Use this Endpoint to Facilitate Moving Tokens from one Player to
+        Another
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDTokenTransferRequest'
+        required: true
+      responses:
+        "200":
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        "500":
+          description: 500 response
+          headers:
+            Access-Control-Allow-Origin:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: SDTokenTransferRequest
+components:
+  schemas:
+    Empty:
+      title: Empty Schema
+      type: object
+      description: Empty Schema
+    Error:
+      title: Error Schema
+      type: object
+      properties:
+        message:
+          type: string
+    SDGameGetResponse:
+      title: SDGameGetResponse
+      required:
+      - bucketName
+      - desc
+      - id
+      - image
+      - name
+      - ownerId
+      type: object
+      properties:
+        id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+        ownerId:
+          type: string
+          description: Game Owner ID
+        name:
+          type: string
+          description: Game name
+        desc:
+          type: string
+          description: Game description
+        image:
+          type: string
+          description: Game image
+        bucketName:
+          type: string
+          description: Game bucket name
+        news:
+          type: string
+          description: Game news
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/SDGameGetResponse_fees'
+        props:
+          type: object
+          properties: {}
+          description: Game properties
+          example: {}
+        testMode:
+          type: boolean
+          description: If on test mode features are enabled. Currently in development.
+      description: This is the data output json model
+      example:
+        news: news
+        image: image
+        bucketName: bucketName
+        fees:
+        - feePercentage: 6
+          feeType: feeType
+        - feePercentage: 6
+          feeType: feeType
+        testMode: true
+        name: name
+        id: 171976544
+        ownerId: ownerId
+        desc: desc
+        props: {}
+    SDGameMutateRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The games description
+        news:
+          type: string
+          description: The games news
+        props:
+          type: object
+          properties: {}
+          description: Game properties
+        testMode:
+          type: boolean
+          description: Test mode will enable any test mode features. Currently in
+            development.
+    SDHealthResponse:
+      title: SDHealthResponse
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: "Connect to AWS subsystems worked properly, i.e. OK"
+      description: Data model for the /health response
+      example:
+        status: status
+    SDPlayerCountResponse:
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+      example:
+        count: 0
+    SDPlayerCreateJWTObject:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Your provider JWT name
+        idToken:
+          type: string
+          description: idToken of the user session
+        accessToken:
+          type: string
+          description: Access token of the user session
+    SDPlayerCreateRequest:
+      required:
+      - uniqueId
+      - userData
+      type: object
+      properties:
+        uniqueId:
+          type: string
+          description: Identifier for the player
+        image:
+          type: string
+          description: URL of the player's image
+        userData:
+          type: object
+          properties: {}
+          description: Metadata about the player
+    SDPlayerCreateResponse:
+      title: SDPlayerCreateResponse
+      required:
+      - playerId
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player's ID in UUID format
+      description: The id of the player created
+      example:
+        playerId: playerId
+    SDPlayerGetAllResponse:
+      title: SDPlayerGetAllResponse
+      required:
+      - playerId
+      - uniqueId
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player ID in the form of a UUID
+        uniqueId:
+          type: string
+          description: Game player's unique ID from the game itself
+        id:
+          type: number
+          description: Game player's ID in the database
+        lastSeen:
+          type: string
+          description: Date and time the player was 'last seen' actively participating
+            in the game
+        image:
+          type: string
+          description: URL of image cached by Stardust
+      additionalProperties:
+        type: string
+      description: This is the data output json model
+      x-schema-name: SDPlayerGetAllResponse
+    SDPlayerGetAllResponses:
+      title: SDPlayerGetAllResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDPlayerGetAllResponse'
+      x-schema-name: SDPlayerGetAllResponses
+    SDPlayerGetIdResponse:
+      title: SDPlayerGetIdResponse
+      required:
+      - playerId
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player's Id
+      description: This is the data output json model
+      example:
+        playerId: playerId
+    SDPlayerGetIdsResponse:
+      title: SDPlayerGetIdResponse
+      required:
+      - playerId
+      - uniqueId
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player ID in the form of a UUID
+        uniqueId:
+          type: string
+          description: "Player ID in the form of a the game player's internal playerId,\
+            \ i.e. email address, uuid"
+      description: "This is the data output json model, i.e. {\"uniqueId\": \"playerId\"\
+        } "
+      example:
+        uniqueId: uniqueId
+        playerId: playerId
+    SDPlayerGetIdsResponses:
+      title: SDPlayerGetIdsResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDPlayerGetIdsResponse'
+      x-schema-name: SDPlayerGetIdsResponses
+    SDPlayerGetInventoryResponse:
+      title: SDPlayerGetInventoryResponse
+      required:
+      - amount
+      - tokenId
+      type: object
+      properties:
+        tokenId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Token ID
+        amount:
+          type: string
+          description: "u64 Number as String, min: 0, max: 9223372036854775807"
+      description: This is the data output json model
+      example:
+        amount: amount
+        tokenId: 171976544
+    SDPlayerGetInventoryResponses:
+      title: SDPlayerGetInventoryResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDPlayerGetInventoryResponse'
+      x-schema-name: SDPlayerGetInventoryResponses
+    SDPlayerGetResponse:
+      title: SDPlayerGetResponse
+      required:
+      - playerId
+      - uniqueId
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player ID in the form of a UUID
+        uniqueId:
+          type: string
+          description: "Player ID in the form of a the game owner's internal playerId,\
+            \ i.e. email address"
+        lastSeen:
+          type: string
+          description: Date and time the player was 'last seen' actively participating
+            in the game
+        image:
+          type: string
+          description: URL of image cached by Stardust
+      additionalProperties:
+        type: string
+      description: This is the data output json model
+      x-schema-name: SDPlayerGetResponse
+    SDPlayerIdResponse:
+      title: SDPlayerIdResponse
+      type: string
+      description: "This is the data output json model, i.e. {\"playerId\"} "
+    SDPlayerMutateRequest:
+      required:
+      - playerId
+      - props
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Can be found with Player/getId(s).
+        props:
+          type: object
+          properties: {}
+          description: "Specifies which properties you want to change (ex. {prop1:\
+            \ 5, prop2: 6, prop3: 7})"
+    SDPlayerWalletGetResponse:
+      title: SDPlayerWalletGetResponse
+      required:
+      - wallet
+      type: object
+      properties:
+        wallet:
+          type: array
+          description: An array of player wallets on the blockchain
+          items:
+            $ref: '#/components/schemas/SDPlayerWalletGetResponse_wallet'
+      description: This is the data output json model
+      example:
+        wallet:
+        - address: address
+          blockchain: blockchain
+          monies:
+          - amount: amount
+            currencyCode: currencyCode
+          - amount: amount
+            currencyCode: currencyCode
+        - address: address
+          blockchain: blockchain
+          monies:
+          - amount: amount
+            currencyCode: currencyCode
+          - amount: amount
+            currencyCode: currencyCode
+    SDPlayerWithdrawObject:
+      required:
+      - amount
+      - tokenId
+      type: object
+      properties:
+        tokenId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        amount:
+          type: string
+          description: "u64 Number as String, min: 0, max: 9223372036854775807"
+    SDPlayerWithdrawRequest:
+      required:
+      - address
+      - playerId
+      - tokenObjects
+      type: object
+      properties:
+        address:
+          type: string
+          description: Blockchain Address
+        playerId:
+          type: string
+          description: "The Player's id, can be found with Player/getId(s). Also returned\
+            \ from player/create (ex. CzySggxVQz51jciGRFDY7d5BER2fav6TNEnPGjusPJPd)"
+        tokenObjects:
+          title: SDPlayerWithdrawObject
+          type: array
+          description: array of Token objects
+          items:
+            $ref: '#/components/schemas/SDPlayerWithdrawObject'
+    SDTemplateCountResponse:
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+      example:
+        count: 0
+    SDTemplateCreateBulk:
+      required:
+      - image
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the template (ex. Bronze Axe)
+        cap:
+          type: string
+          description: "u96 Number as String (ex. 200000000), default 39614081257132168796771975168 "
+        contractType:
+          type: string
+          description: The type of custom contract to use for this template. Default
+            will use a shared contract.
+          enum:
+          - ERC721
+        type:
+          type: string
+          description: "FT is a currency where every instance is the same, NFT is\
+            \ where every token instance differes (ex. FT)"
+          enum:
+          - FT
+          - NFT
+        image:
+          type: string
+          description: image url
+        description:
+          type: string
+          description: Description of template
+        activeListing:
+          type: boolean
+          description: Set if the Template is active or not
+        ownerAddress:
+          type: string
+          description: "Blockchain address to set as owner of the custom contract,\
+            \ if contractType is passed in."
+        props:
+          $ref: '#/components/schemas/SDTemplateCreateBulk_props'
+        publicContractMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as contract metadata
+        publicTokenMetadata:
+          type: object
+          properties: {}
+          description: "Inherited by tokens, and returned to marketplaces as token\
+            \ metadata"
+    SDTemplateCreateRequest:
+      required:
+      - cap
+      - name
+      - props
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the template (ex. Bronze Axe)
+        cap:
+          type: string
+          description: 'u96 Number as String (ex. 200000000) '
+        contractType:
+          type: string
+          description: The type of custom contract to use for this template. Default
+            will use a shared contract.
+          enum:
+          - ERC721
+        type:
+          type: string
+          description: "FT is a currency where every instance is the same, NFT is\
+            \ where every token instance differes (ex. FT)"
+          enum:
+          - FT
+          - NFT
+        ownerAddress:
+          type: string
+          description: Blockchain address to set as owner of the custom contract.
+            Required if contractType is set.
+        props:
+          $ref: '#/components/schemas/SDTemplateCreateRequest_props'
+        publicContractMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as contract metadata
+    SDTemplateCreateResponse:
+      title: SDTemplateCreateResponse
+      type: object
+      properties:
+        templateId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+      description: The id of the template created
+      example:
+        templateId: 171976544
+    SDTemplateGetAllResponse:
+      required:
+      - _id
+      - cap
+      - gameId
+      - name
+      - props
+      - totalSupply
+      - type
+      type: object
+      properties:
+        gameId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+        _id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        cap:
+          type: string
+          description: "u96 Number as String, min: 0, max: 39614081257132168796771975167"
+        contractType:
+          type: string
+          description: The type of custom contract bieng used for this template.
+          enum:
+          - ERC721
+          - internal-mint
+          - external-no-mint
+        totalSupply:
+          type: string
+          description: "u96 Number as String, min: 0, max: 39614081257132168796771975167"
+        name:
+          type: string
+          description: The name of the template
+        type:
+          type: string
+          enum:
+          - FT
+          - NFT
+        props:
+          $ref: '#/components/schemas/SDTemplateGetAllResponse_props'
+        publicContractMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as contract metadata
+          example: {}
+        publicTokenMetadata:
+          type: object
+          properties: {}
+          description: "Inherited by tokens, and returned to marketplaces as token\
+            \ metadata"
+          example: {}
+      example:
+        gameId: 171976544
+        cap: cap
+        contractType: ERC721
+        totalSupply: totalSupply
+        name: name
+        _id: 1294386358
+        type: FT
+        props:
+          immutable: {}
+          mutable: {}
+          $mutable: {}
+        publicContractMetadata: {}
+        publicTokenMetadata: {}
+    SDTemplateGetAllResponses:
+      title: SDTemplateGetAllResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDTemplateGetAllResponse'
+      x-schema-name: SDTemplateGetAllResponses
+    SDTemplateGetResponse:
+      required:
+      - _id
+      - cap
+      - gameId
+      - name
+      - props
+      - totalSupply
+      - type
+      type: object
+      properties:
+        gameId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+        _id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        cap:
+          type: string
+          description: "u96 Number as String, min: 0, max: 39614081257132168796771975167"
+        contractType:
+          type: string
+          description: The type of custom contract bieng used for this template.
+          enum:
+          - ERC721
+          - internal-mint
+          - external-no-mint
+        totalSupply:
+          type: string
+          description: "u96 Number as String, min: 0, max: 39614081257132168796771975167"
+        name:
+          type: string
+          description: The name of the template
+        type:
+          type: string
+          enum:
+          - FT
+          - NFT
+        props:
+          $ref: '#/components/schemas/SDTemplateGetAllResponse_props'
+        publicContractMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as contract metadata
+          example: {}
+        publicTokenMetadata:
+          type: object
+          properties: {}
+          description: "Inherited by tokens, and returned to marketplaces as token\
+            \ metadata"
+          example: {}
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/SDGameGetResponse_fees'
+      example:
+        gameId: 171976544
+        fees:
+        - feePercentage: 6
+          feeType: feeType
+        - feePercentage: 6
+          feeType: feeType
+        cap: cap
+        contractType: ERC721
+        totalSupply: totalSupply
+        name: name
+        _id: 1294386358
+        type: FT
+        props:
+          immutable: {}
+          mutable: {}
+          $mutable: {}
+        publicContractMetadata: {}
+        publicTokenMetadata: {}
+    SDTemplateGetTokensResponse:
+      required:
+      - player
+      - token
+      type: object
+      properties:
+        token:
+          $ref: '#/components/schemas/SDTemplateGetTokensResponse_token'
+        player:
+          $ref: '#/components/schemas/SDTemplateGetTokensResponse_player'
+      description: Token data
+      example:
+        token:
+          amount: amount
+          name: name
+          id: 171976544
+          templateId: 1294386358
+          publicMetadata: {}
+          props:
+            immutable: {}
+            inherited: {}
+            mutable: {}
+        player:
+          image: image
+          deletedAt: deletedAt
+          id: id
+          uniqueId: uniqueId
+    SDTemplateGetTokensResponses:
+      title: SDTemplateGetTokensResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDTemplateGetTokensResponse'
+      x-schema-name: SDTemplateGetTokensResponses
+    SDTemplateMutateRequest:
+      required:
+      - templateId
+      type: object
+      properties:
+        templateId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: This is the templateId returned from template/create (ex. 5)
+        props:
+          type: object
+          properties: {}
+          description: "Specifies which properties you want to change (ex. {prop1:\
+            \ 5, prop2: 6, prop3: 7})"
+    SDTokenBurnRequest:
+      required:
+      - playerId
+      - tokenObjects
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: "The Player's id, can be found with Player/getId(s). (ex. CzySggxVQz51jciGRFDY7d5BER2fav6TNEnPGjusPJPd)"
+        tokenObjects:
+          type: array
+          description: "An an array of objects to burn (ex. [{tokenId: 5, amount:\
+            \ \"6\"}])"
+          items:
+            $ref: '#/components/schemas/SDTokenBurnRequest_tokenObjects'
+    SDTokenGetResponse:
+      required:
+      - flags
+      - gameId
+      - id
+      - props
+      - templateId
+      type: object
+      properties:
+        gameId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Game ID Number (unsigned 32 bit integer)
+        templateId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Template ID Number (unsigned 32 bit integer)
+        id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: The ID of the token created
+        name:
+          type: string
+          description: The name of the template
+        flags:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        props:
+          $ref: '#/components/schemas/SDTemplateGetTokensResponse_token_props'
+        owner:
+          type: string
+          description: Game Owner's Public Key
+        publicMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as token metadata
+          example: {}
+      description: token data
+      example:
+        gameId: 171976544
+        owner: owner
+        name: name
+        flags: 1280358508
+        id: 314780940
+        templateId: 1294386358
+        publicMetadata: {}
+        props:
+          immutable: {}
+          inherited: {}
+          mutable: {}
+    SDTokenGetResponses:
+      title: SDTokenGetResponses
+      type: array
+      items:
+        $ref: '#/components/schemas/SDTokenGetResponse'
+      x-schema-name: SDTokenGetResponses
+    SDTokenMintBulkRequest:
+      required:
+      - playerId
+      - tokenObjects
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: "The Player's id, can be found with Player/getId(s). The player\
+            \ ID that was returned from player/create (ex. CzySggxVQz51jciGRFDY7d5BER2fav6TNEnPGjusPJPd)"
+        tokenObjects:
+          title: SDTokenMintBulkTokenObject
+          type: array
+          description: array of Token objects
+          items:
+            $ref: '#/components/schemas/SDTokenMintBulkTokenObject'
+    SDTokenMintBulkResponse:
+      title: SDTokenMintBulkResponse
+      type: integer
+      description: The id of the token created
+    SDTokenMintBulkResponses:
+      title: SDTokenMintBulkResponses
+      type: array
+      description: list of tokenIds
+      items:
+        $ref: '#/components/schemas/SDTokenMintBulkResponse'
+      x-schema-name: SDTokenMintBulkResponses
+    SDTokenMintBulkTokenObject:
+      required:
+      - amount
+      - templateId
+      type: object
+      properties:
+        templateId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Specifies which Template you are creating an instance of (ex.
+            3)
+        amount:
+          type: string
+          description: "u64 Number as String, min: 0, max: 9223372036854775807 (ex.\
+            \ \"6\")"
+        props:
+          $ref: '#/components/schemas/SDTokenMintBulkTokenObject_props'
+        publicMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as token metadata
+    SDTokenMutateRequest:
+      required:
+      - props
+      - tokenId
+      type: object
+      properties:
+        tokenId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Specifies which tokenId you want to manipulate (ex. 11)
+        props:
+          type: object
+          properties: {}
+          description: "Specifies which properties you want to change (ex. {prop1:\
+            \ 5, prop2: 6, prop3: 7})"
+        publicMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as token metadata
+    SDTokenTransferRequest:
+      required:
+      - fromPlayerId
+      - toPlayerId
+      - tokenObjects
+      type: object
+      properties:
+        fromPlayerId:
+          type: string
+          description: "The Player's id, can be found with Player/getId(s). (ex. CzySggxVQz51jciGRFDY7d5BER2fav6TNEnPGjusPJPd)"
+        toPlayerId:
+          type: string
+          description: "The Player's id, can be found with Player/getId(s). (ex. 53ywNSVp46QpiA6S86DLLfeKVfjcSAFxHR2L9j8tnte2)"
+        tokenObjects:
+          type: array
+          description: "An array of objects of which tokens to transfer (ex. [{tokenId:\
+            \ 5, amount: \"3\"}])"
+          items:
+            $ref: '#/components/schemas/SDTokenBurnRequest_tokenObjects'
+    SDGameGetResponse_fees:
+      type: object
+      properties:
+        feePercentage:
+          type: integer
+          description: 'The integer value of feePercentage. '
+        feeType:
+          type: string
+          description: The type of fee
+      example:
+        feePercentage: 6
+        feeType: feeType
+    SDPlayerWalletGetResponse_monies:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: "The balance in minor units. ex: 2000000 for 2 coins USDC"
+        currencyCode:
+          type: string
+          description: "The currency code associated with the amount. ex: 'USDC'"
+      description: The Money object representation of the balance
+      example:
+        amount: amount
+        currencyCode: currencyCode
+    SDPlayerWalletGetResponse_wallet:
+      required:
+      - address
+      - blockchain
+      type: object
+      properties:
+        blockchain:
+          type: string
+          description: The name of the blockchain
+        address:
+          type: string
+          description: The players blockchain Address
+        monies:
+          type: array
+          description: An array of the players balances on a given blockchain
+          items:
+            $ref: '#/components/schemas/SDPlayerWalletGetResponse_monies'
+      example:
+        address: address
+        blockchain: blockchain
+        monies:
+        - amount: amount
+          currencyCode: currencyCode
+        - amount: amount
+          currencyCode: currencyCode
+    SDTemplateCreateBulk_props:
+      type: object
+      properties:
+        immutable:
+          type: object
+          properties: {}
+          description: Properties for immutable on the Template
+        mutable:
+          type: object
+          properties: {}
+          description: Properties for mutable on the Template
+        $mutable:
+          type: object
+          properties: {}
+          description: Properties for mutable on the Item
+    SDTemplateCreateRequest_props:
+      type: object
+      properties:
+        immutable:
+          type: object
+          properties: {}
+          description: Properties for immutable on the Template
+        mutable:
+          type: object
+          properties: {}
+          description: Properties for mutable on the Template
+    SDTemplateGetAllResponse_props:
+      required:
+      - $mutable
+      - immutable
+      - mutable
+      type: object
+      properties:
+        immutable:
+          type: object
+          properties: {}
+          example: {}
+        mutable:
+          type: object
+          properties: {}
+          example: {}
+        $mutable:
+          type: object
+          properties: {}
+          example: {}
+      example:
+        immutable: {}
+        mutable: {}
+        $mutable: {}
+    SDTemplateGetTokensResponse_token_props:
+      required:
+      - immutable
+      - inherited
+      - mutable
+      type: object
+      properties:
+        immutable:
+          type: object
+          properties: {}
+          example: {}
+        mutable:
+          type: object
+          properties: {}
+          example: {}
+        inherited:
+          type: object
+          properties: {}
+          example: {}
+      example:
+        immutable: {}
+        inherited: {}
+        mutable: {}
+    SDTemplateGetTokensResponse_token:
+      required:
+      - amount
+      - id
+      type: object
+      properties:
+        id:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Token ID Number (unsigned 32 bit integer)
+        amount:
+          type: string
+          description: "u64 Number as String, min: 0, max: 9223372036854775807 (ex.\
+            \ \"6\")"
+        templateId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          description: Template ID Number (unsigned 32 bit integer)
+        name:
+          type: string
+          description: Template Name
+        props:
+          $ref: '#/components/schemas/SDTemplateGetTokensResponse_token_props'
+        publicMetadata:
+          type: object
+          properties: {}
+          description: Returned to marketplaces as token metadata
+          example: {}
+      example:
+        amount: amount
+        name: name
+        id: 171976544
+        templateId: 1294386358
+        publicMetadata: {}
+        props:
+          immutable: {}
+          inherited: {}
+          mutable: {}
+    SDTemplateGetTokensResponse_player:
+      required:
+      - id
+      - uniqueId
+      type: object
+      properties:
+        id:
+          type: string
+          description: Player ID in the form of a UUID
+        uniqueId:
+          type: string
+          description: "Player ID in the form of a the game owner's internal playerId,\
+            \ i.e. email address"
+        image:
+          type: string
+          description: URL of image cached by Stardust
+        deletedAt:
+          type: string
+          description: Timestamp of when a player was deleted
+      example:
+        image: image
+        deletedAt: deletedAt
+        id: id
+        uniqueId: uniqueId
+    SDTokenBurnRequest_tokenObjects:
+      required:
+      - amount
+      - tokenId
+      type: object
+      properties:
+        tokenId:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        amount:
+          type: string
+          description: "u64 Number as String, min: 0, max: 9223372036854775807"
+    SDTokenMintBulkTokenObject_props:
+      required:
+      - mutable
+      type: object
+      properties:
+        mutable:
+          type: object
+          properties: {}
+          description: "Specifies which properties you want to add (ex. {prop1: 5,\
+            \ prop2: 6, prop3: 7})"
+        immutable:
+          type: object
+          properties: {}
+          description: "Specifies which properties you want to add (ex. {prop1: 5,\
+            \ prop2: 6, prop3: 7})"
+      description: Internal metadata
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+x-original-swagger-version: "2.0"
